@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hammersmith+One">
+    <script src="lib/anime.min.js"></script>
+    <script src="lib/tmi.min.js"></script>
+    <script src="config.js"></script>
+    <style>
+        body {
+            font-family: "Hammersmith One";
+        }
+
+        .cicleClip {
+            width: 300px;
+            height: 300px;
+            clip-path: circle(50% at 50% 50%);
+        }
+
+        .text {
+            color: white;
+            background-color: rgb(67, 206, 251);
+            font-size: 56px;
+            padding-top: 3px;
+            padding-left: 30px;
+            padding-right: 30px;
+            border-radius: 1000px;
+            top: 260px;
+            text-align: center;
+        }
+
+        .imagepos {
+            position: fixed;
+            left: -300px;
+        }
+
+        .textpos {
+            position: fixed;
+            left: 2220px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content" class="cicleClip imagepos"></div>
+    <div id="text" class="textpos text"></div>
+    <script>
+
+        const tmiConfig = {
+            "channels": [
+                config['myChannel']
+            ]
+        }
+
+        client = new tmi.client(tmiConfig)
+
+        client.on('message', onMessageHandler)
+        client.on('connected', onConnectedHandler)
+
+        client.connect()
+
+        function onMessageHandler(target, context, msg, self) {
+
+            if (context.mod || (context["badges-raw"] != null && context["badges-raw"].startsWith("broadcaster"))) {
+
+                if (msg.startsWith('!so')) {
+                    var username = msg.split(' ')[1]
+
+                    if (username.startsWith('@')) {
+                        username = username.substring(1)
+                    }
+
+                    shoutout(username)
+                }
+            }
+        }
+
+        function onConnectedHandler(addr, port) {
+            console.log(`* Connected to ${addr}:${port}`);
+        }
+
+        function shoutout(twitchUsername) {
+            getProfileImageURL(twitchUsername, function (username, imageURL) {
+                const img = `<img src="${imageURL}"/>`
+                document.getElementById('content').innerHTML = img
+                document.getElementById('text').innerHTML = username
+
+                doAnimations()
+            })
+        }
+
+        function doAnimations() {
+            let imgAnimIn = anime({
+                targets: '.imagepos',
+                translateX: 1110,
+                rotate: '1turn',
+                autoplay: false,
+                duration: 1000,
+                endDelay: 500
+            })
+
+            imgAnimIn.finished.then(function () {
+                imgAnimIn.reverse()
+                imgAnimIn.play()
+            })
+
+            let textAnimIn = anime({
+                targets: '.textpos',
+                translateX: -1310,
+                autoplay: false,
+                duration: 1000,
+                endDelay: 500
+            })
+
+            textAnimIn.finished.then(function () {
+                textAnimIn.reverse()
+                textAnimIn.play()
+            })
+
+            imgAnimIn.play()
+            textAnimIn.play()
+        }
+
+        function getProfileImageURL(username, callback) {
+            function httpCallback() {
+                const data = JSON.parse(this.responseText)
+                const imageURL = data.data[0].profile_image_url
+
+                console.log(data)
+                callback(username, imageURL)
+            }
+
+            const httpRequest = new XMLHttpRequest()
+
+            httpRequest.addEventListener('load', httpCallback)
+            httpRequest.open('GET', `https://api.twitch.tv/helix/users?login=${username}`)
+            httpRequest.setRequestHeader('Client-ID', config['Client-ID'])
+            httpRequest.setRequestHeader('Authorization', config['Authorization'])
+            httpRequest.send()
+        }
+
+    </script>
+</body>
+
+</html>

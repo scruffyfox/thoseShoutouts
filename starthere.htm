@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hammersmith+One">
+    <style>
+        body {
+            font-family: "Hammersmith One";
+        }
+
+        #result {
+            width: 500px;
+            height: 100px;
+        }
+
+        img {
+            border: 3px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Animated Shoutouts by <a href="https://twitch.tv/thoseeyes" target="_blank">thoseEyes</a></h1>
+
+    <h2>Setup Guide</h2>
+
+    <p>As these shoutouts show profile pictures, we need to authorise with Twitch's servers.</p>
+    <p>The following steps will show you how to generate a 'token' to allow access. </p>
+    <p><b>You will need to regenerate this every 60 days (for now)</b></p>
+    <p>To use Animated Shoutouts, please add 'shoutouts.htm' as a local browser sourse in OBS.</p>
+
+    <h2>Token Generation</h2>
+
+    <p>1. Click <a href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=9l8ufsalz4hqlzzl1g0mr7e38uxx1m&redirect_uri=http://localhost&scope=user_read" target="_blank">here</a> and login to Twitch</p>
+
+    <p>2. Once logged in, you'll be directed to an error page, BUT FEAR NOT. Copy the value highlighted in the address bar (between the = and the &amp;), as pictured below:</p>
+
+    <img src="images/addressbar.png"/>
+
+    <p>3. Open 'config.js' in Notepad and paste in the value as highlighted in the image below:</p>
+
+    <img src="images/token.png"/>
+
+    <p>4. Put your channel name (mine would be 'thoseEyes') in place of the text as highlighted below:</p>
+
+    <img src="images/channelName.png"/>
+
+    <p>5. Save the file.</p>
+
+    <h2>OBS Setup</h2>
+
+    <p>1. In OBS, create a new Browser Source.</p>
+
+    <p>2. Tick 'Local file' and 'Width' to 1920 and 'Height' to 350.</p>
+
+    <p>3. Tick 'Shutdown source when not visible' and 'Refresh Browser when scene becomes active'.</p>
+
+    <img src="images/obs.jpg" />
+
+    <p>4. Click OK and you're done in OBS</p>
+
+</body>
+
+</html>

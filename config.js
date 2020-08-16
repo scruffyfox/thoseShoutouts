@@ -1,0 +1,1 @@
+const config = { 'myChannel': 'yourChannelNameHere', 'Client-ID': '9l8ufsalz4hqlzzl1g0mr7e38uxx1m', 'Authorization': 'Bearer yourTokenHere'}
