@@ -29,25 +29,32 @@
     <p><b>You will need to regenerate this every 60 days (for now)</b></p>
     <p>To use Animated Shoutouts, please add 'shoutouts.htm' as a local browser sourse in OBS.</p>
 
-    <h2>Token Generation</h2>
+    <a href="#tokens">Token Generation</a> | 
+    <a href="#obs">OBS Setup</a> | 
+    <a href="#customisation">Customisation</a>
 
-    <p>1. Click <a href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=9l8ufsalz4hqlzzl1g0mr7e38uxx1m&redirect_uri=http://localhost&scope=user_read" target="_blank">here</a> and login to Twitch</p>
+    <a id="tokens"><h2>Token Generation</h2></a>
 
-    <p>2. Once logged in, you'll be directed to an error page, BUT FEAR NOT. Copy the value highlighted in the address bar (between the = and the &amp;), as pictured below:</p>
+    <p>1. Click <a
+            href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=9l8ufsalz4hqlzzl1g0mr7e38uxx1m&redirect_uri=http://localhost&scope=user_read"
+            target="_blank">here</a> and login to Twitch</p>
 
-    <img src="images/addressbar.png"/>
+    <p>2. Once logged in, you'll be directed to an error page, BUT FEAR NOT. Copy the value highlighted in the address
+        bar (between the = and the &amp;), as pictured below:</p>
+
+    <img src="images/addressbar.png" />
 
     <p>3. Open 'config.js' in Notepad and paste in the value as highlighted in the image below:</p>
 
-    <img src="images/token.png"/>
+    <img src="images/token.png" />
 
     <p>4. Put your channel name (mine would be 'thoseEyes') in place of the text as highlighted below:</p>
 
-    <img src="images/channelName.png"/>
+    <img src="images/channelName.png" />
 
     <p>5. Save the file.</p>
 
-    <h2>OBS Setup</h2>
+    <a id="obs"><h2>OBS Setup</h2></a>
 
     <p>1. In OBS, create a new Browser Source.</p>
 
@@ -59,6 +66,15 @@
 
     <p>4. Click OK and you're done in OBS</p>
 
+    <a id="customisation"><h2>Customisation</h2></a>
+
+    <p>Open up <b>config.js</b> and inside you can change the following variables:</p>
+
+    <ul>
+        <li>pauseDuration - the length of time the shoutout will pause in the centre of the screen (in milliseconds)</li>
+        <li>rollInOutDuration - time taken for the image and text to roll in to the centre of the screen (in
+            milliseconds)</li>
+    </ul>
 </body>
 
 </html>
