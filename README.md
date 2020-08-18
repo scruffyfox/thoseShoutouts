@@ -21,7 +21,7 @@ Currently this code has the following shortcomings:
 - Only one type of animation (roll in and out)
 - Manual steps to setup config.js for authorisation
 
-## Depenencies
+## Dependencies 
 This code makes use of the following libraries
 
 - [tmi.js](https://github.com/tmijs/tmi.js)
