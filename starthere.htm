@@ -29,11 +29,13 @@
     <p><b>You will need to regenerate this every 60 days (for now)</b></p>
     <p>To use Animated Shoutouts, please add 'shoutouts.htm' as a local browser sourse in OBS.</p>
 
-    <a href="#tokens">Token Generation</a> | 
-    <a href="#obs">OBS Setup</a> | 
+    <a href="#tokens">Token Generation</a> |
+    <a href="#obs">OBS Setup</a> |
     <a href="#customisation">Customisation</a>
 
-    <a id="tokens"><h2>Token Generation</h2></a>
+    <a id="tokens">
+        <h2>Token Generation</h2>
+    </a>
 
     <p>1. Click <a
             href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=9l8ufsalz4hqlzzl1g0mr7e38uxx1m&redirect_uri=http://localhost&scope=user_read"
@@ -54,7 +56,9 @@
 
     <p>5. Save the file.</p>
 
-    <a id="obs"><h2>OBS Setup</h2></a>
+    <a id="obs">
+        <h2>OBS Setup</h2>
+    </a>
 
     <p>1. In OBS, create a new Browser Source.</p>
 
@@ -66,14 +70,20 @@
 
     <p>4. Click OK and you're done in OBS</p>
 
-    <a id="customisation"><h2>Customisation</h2></a>
+    <a id="customisation">
+        <h2>Customisation</h2>
+    </a>
 
     <p>Open up <b>config.js</b> and inside you can change the following variables:</p>
 
     <ul>
-        <li>pauseDuration - the length of time the shoutout will pause in the centre of the screen (in milliseconds)</li>
+        <li>pauseDuration - the length of time the shoutout will pause in the centre of the screen (in milliseconds)
+        </li>
         <li>rollInOutDuration - time taken for the image and text to roll in to the centre of the screen (in
             milliseconds)</li>
+        <li>userBackgroundColour - background color of the label</li>
+        <li>
+            userTextColour - text color of the label</li>
     </ul>
 </body>
 
