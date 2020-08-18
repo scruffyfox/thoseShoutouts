@@ -48,7 +48,7 @@
 
         const tmiConfig = {
             "channels": [
-                config['myChannel']
+                channel
             ]
         }
 
@@ -95,8 +95,8 @@
                 translateX: 1110,
                 rotate: '1turn',
                 autoplay: false,
-                duration: 1000,
-                endDelay: 500
+                duration: rollInOutDuration,
+                endDelay: pauseDuration
             })
 
             imgAnimIn.finished.then(function () {
@@ -108,8 +108,8 @@
                 targets: '.textpos',
                 translateX: -1310,
                 autoplay: false,
-                duration: 1000,
-                endDelay: 500
+                duration: rollInOutDuration,
+                endDelay: pauseDuration
             })
 
             textAnimIn.finished.then(function () {
