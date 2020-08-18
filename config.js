@@ -13,6 +13,12 @@ const pauseDuration = 500
 // Value is milliseconds so 1 second = 1000
 const rollInOutDuration = 1000
 
+// Background color of the label
+const userBackgroundColour = '#43cefb'
+
+// Text color of the label
+const userTextColour = '#ffffff'
+
 // Do not touch this stuff x
 const config = { 'Client-ID': '9l8ufsalz4hqlzzl1g0mr7e38uxx1m',
                  'Authorization': `Bearer ${token}` }
