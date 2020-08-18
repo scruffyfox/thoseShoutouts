@@ -18,8 +18,6 @@
         }
 
         .text {
-            color: white;
-            background-color: rgb(67, 206, 251);
             font-size: 56px;
             padding-top: 3px;
             padding-left: 30px;
@@ -58,6 +56,8 @@
         client.on('connected', onConnectedHandler)
 
         client.connect()
+
+        setColours()
 
         function onMessageHandler(target, context, msg, self) {
 
@@ -119,6 +119,11 @@
 
             imgAnimIn.play()
             textAnimIn.play()
+        }
+
+        function setColours() {
+            text.style.backgroundColor = userBackgroundColour
+            text.style.color = userTextColour
         }
 
         function getProfileImageURL(username, callback) {
