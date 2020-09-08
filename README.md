@@ -4,7 +4,10 @@ A simple animation that responds to the !so command in Twitch chat. It shows a s
 To get started, download the the code and double-click 'starthere.htm' for full instructions on how to set this up.
 
 ### [Download Here](https://github.com/thoseEyes/thoseShoutouts/archive/main.zip)
-#
+
+## Updates
+- BUG FIX ([PR#4](https://github.com/thoseEyes/thoseShoutouts/pull/4)): Quick consecutive !so calls no longer stall (in wonky positions)
+- BUG FIX ([PR#4](https://github.com/thoseEyes/thoseShoutouts/pull/4)): Quick consecutive !so calls no longer cause profile images to be replaced mid-animation
 
 ## Customisation
 
