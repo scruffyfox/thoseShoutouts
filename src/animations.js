@@ -1,13 +1,3 @@
-function AnimationListener(onShoutoutStart, onShoutoutEnd) {
-    this.onShoutoutStart = onShoutoutStart
-    this.onShoutoutEnd = onShoutoutEnd
-}
-
-function AnimationConfig(pauseDuration, rollInOutDuration) {
-    this.pauseDuration = pauseDuration
-    this.rollInOutDuration = rollInOutDuration
-}
-
 function doAnimation(shoutoutModel, listener, config) {
 
     listener.onShoutoutStart()

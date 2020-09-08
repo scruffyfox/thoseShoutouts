@@ -1,8 +1,3 @@
-function ShoutoutModel(username, imageURL) {
-    this.username = username
-    this.imageURL = imageURL
-}
-
 let shoutoutQueue
 let isAnimating
 let client
@@ -50,7 +45,7 @@ function onConnectedHandler(addr, port) {
 
 function shoutout(twitchUsername) {
     getProfileImageURL(twitchUsername, function (username, imageURL) {
-        const shoutoutModel = new ShoutoutModel(username, imageURL)
+        const shoutoutModel = {username: username, imageURL: imageURL}
         pushShoutout(shoutoutModel)
     })
 }
@@ -78,8 +73,8 @@ function playNextShoutout() {
     const nextShoutout = shoutoutQueue[0]
     shoutoutQueue.shift()
 
-    const listener = new AnimationListener(onShoutoutStart, onShoutoutEnd)
-    const config = new AnimationConfig(pauseDuration, rollInOutDuration)
+    const listener = {onShoutoutStart: onShoutoutStart, onShoutoutEnd: onShoutoutEnd}
+    const config = {pauseDuration: pauseDuration, rollInOutDuration: rollInOutDuration}
     doAnimation(nextShoutout, listener, config)
 }
 
