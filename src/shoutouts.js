@@ -45,7 +45,7 @@ function onMessageHandler(target, context, msg, self) {
 }
 
 function onConnectedHandler(addr, port) {
-    console.log(`* Connected to ${addr}:${port}`);
+    console.log(`* Connected to ${addr}:${port}`)
 }
 
 function shoutout(twitchUsername) {
@@ -53,46 +53,6 @@ function shoutout(twitchUsername) {
         const shoutoutModel = new ShoutoutModel(username, imageURL)
         pushShoutout(shoutoutModel)
     })
-}
-
-function doAnimation(shoutoutModel) {
-
-    onShoutoutStart()
-
-    const img = `<img src="${shoutoutModel.imageURL}"/>`
-    document.getElementById('content').innerHTML = img
-    document.getElementById('text').innerHTML = shoutoutModel.username
-
-    let imgAnimIn = anime({
-        targets: '.imagepos',
-        translateX: 1110,
-        rotate: '1turn',
-        autoplay: false,
-        duration: rollInOutDuration,
-        endDelay: pauseDuration
-    })
-
-    imgAnimIn.finished.then(function () {
-        imgAnimIn.reverse()
-        imgAnimIn.play()
-        imgAnimIn.finished.then(onShoutoutEnd)
-    })
-
-    let textAnimIn = anime({
-        targets: '.textpos',
-        translateX: -1310,
-        autoplay: false,
-        duration: rollInOutDuration,
-        endDelay: pauseDuration
-    })
-
-    textAnimIn.finished.then(function () {
-        textAnimIn.reverse()
-        textAnimIn.play()
-    })
-
-    imgAnimIn.play()
-    textAnimIn.play()
 }
 
 function onShoutoutStart() {
@@ -117,7 +77,10 @@ function playNextShoutout() {
 
     const nextShoutout = shoutoutQueue[0]
     shoutoutQueue.shift()
-    doAnimation(nextShoutout)
+
+    const listener = new AnimationListener(onShoutoutStart, onShoutoutEnd)
+    const config = new AnimationConfig(pauseDuration, rollInOutDuration)
+    doAnimation(nextShoutout, listener, config)
 }
 
 function setColours() {
