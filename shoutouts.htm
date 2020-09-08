@@ -44,6 +44,14 @@
     <div id="text" class="textpos text"></div>
     <script>
 
+        function ShoutoutModel(username, imageURL) {
+            this.username = username
+            this.imageURL = imageURL
+        }
+
+        let shoutoutQueue = []
+        let isAnimating = false
+
         const tmiConfig = {
             "channels": [
                 channel
@@ -81,15 +89,19 @@
 
         function shoutout(twitchUsername) {
             getProfileImageURL(twitchUsername, function (username, imageURL) {
-                const img = `<img src="${imageURL}"/>`
-                document.getElementById('content').innerHTML = img
-                document.getElementById('text').innerHTML = username
-
-                doAnimations()
+                const shoutoutModel = new ShoutoutModel(username, imageURL)
+                pushShoutout(shoutoutModel)
             })
         }
 
-        function doAnimations() {
+        function doAnimation(shoutoutModel) {
+
+            onShoutoutStart()
+
+            const img = `<img src="${shoutoutModel.imageURL}"/>`
+            document.getElementById('content').innerHTML = img
+            document.getElementById('text').innerHTML = shoutoutModel.username
+
             let imgAnimIn = anime({
                 targets: '.imagepos',
                 translateX: 1110,
@@ -102,6 +114,7 @@
             imgAnimIn.finished.then(function () {
                 imgAnimIn.reverse()
                 imgAnimIn.play()
+                imgAnimIn.finished.then(onShoutoutEnd)
             })
 
             let textAnimIn = anime({
@@ -121,6 +134,31 @@
             textAnimIn.play()
         }
 
+        function onShoutoutStart() {
+            isAnimating = true
+        }
+
+        function onShoutoutEnd() {
+            isAnimating = false
+            playNextShoutout()
+        }
+
+        function pushShoutout(shoutoutModel) {
+            shoutoutQueue.push(shoutoutModel)
+            playNextShoutout()
+        }
+
+        function playNextShoutout() {
+
+            if (shoutoutQueue.length === 0 || isAnimating) {
+                return
+            }
+
+            const nextShoutout = shoutoutQueue[0]
+            shoutoutQueue.shift()
+            doAnimation(nextShoutout)
+        }
+
         function setColours() {
             text.style.backgroundColor = userBackgroundColour
             text.style.color = userTextColour
@@ -131,7 +169,6 @@
                 const data = JSON.parse(this.responseText)
                 const imageURL = data.data[0].profile_image_url
 
-                console.log(data)
                 callback(username, imageURL)
             }
 
