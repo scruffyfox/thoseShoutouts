@@ -1,6 +1,6 @@
-let shoutoutQueue
-let isAnimating
-let client
+let shoutoutQueue = false
+let isAnimating = false
+let client = false
 
 function init() {
 
@@ -45,8 +45,10 @@ function onConnectedHandler(addr, port) {
 
 function shoutout(twitchUsername) {
     getProfileImageURL(twitchUsername, function (username, imageURL) {
-        const shoutoutModel = {username: username, imageURL: imageURL}
-        pushShoutout(shoutoutModel)
+        pushShoutout({
+            username: username, 
+            imageURL: imageURL
+        })
     })
 }
 
@@ -73,9 +75,22 @@ function playNextShoutout() {
     const nextShoutout = shoutoutQueue[0]
     shoutoutQueue.shift()
 
-    const listener = {onShoutoutStart: onShoutoutStart, onShoutoutEnd: onShoutoutEnd}
-    const config = {pauseDuration: pauseDuration, rollInOutDuration: rollInOutDuration}
-    doAnimation(nextShoutout, listener, config)
+    updateHTML(nextShoutout)
+
+    doAnimation({
+        contentElementId: '#content', 
+        textElementId: '#text',
+        pauseDuration: pauseDuration, 
+        rollInOutDuration: rollInOutDuration,
+        onShoutoutStart: onShoutoutStart, 
+        onShoutoutEnd: onShoutoutEnd
+    })
+}
+
+function updateHTML(shoutoutModel) {
+    const img = `<img src="${shoutoutModel.imageURL}"/>`
+    document.getElementById('content').innerHTML = img
+    document.getElementById('text').innerHTML = shoutoutModel.username
 }
 
 function setColours() {

@@ -1,32 +1,28 @@
-function doAnimation(shoutoutModel, listener, config) {
+function doAnimation(animationData) {
 
-    listener.onShoutoutStart()
+    animationData.onShoutoutStart()
 
-    const img = `<img src="${shoutoutModel.imageURL}"/>`
-    document.getElementById('content').innerHTML = img
-    document.getElementById('text').innerHTML = shoutoutModel.username
-
-    let imgAnimIn = anime({
-        targets: '.imagepos',
+    const imgAnimIn = anime({
+        targets: animationData.contentElementId,
         translateX: 1110,
         rotate: '1turn',
         autoplay: false,
-        duration: config.rollInOutDuration,
-        endDelay: config.pauseDuration
+        duration: animationData.rollInOutDuration,
+        endDelay: animationData.pauseDuration
     })
 
     imgAnimIn.finished.then(function () {
         imgAnimIn.reverse()
         imgAnimIn.play()
-        imgAnimIn.finished.then(listener.onShoutoutEnd)
+        imgAnimIn.finished.then(animationData.onShoutoutEnd)
     })
 
-    let textAnimIn = anime({
-        targets: '.textpos',
+    const textAnimIn = anime({
+        targets: animationData.textElementId,
         translateX: -1310,
         autoplay: false,
-        duration: config.rollInOutDuration,
-        endDelay: config.pauseDuration
+        duration: animationData.rollInOutDuration,
+        endDelay: animationData.pauseDuration
     })
 
     textAnimIn.finished.then(function () {
