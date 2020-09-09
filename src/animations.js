@@ -8,7 +8,8 @@ function doAnimation(animationData) {
         rotate: '1turn',
         autoplay: false,
         duration: animationData.rollInOutDuration,
-        endDelay: animationData.pauseDuration
+        endDelay: animationData.pauseDuration,
+        easing: animationData.animationEasing
     })
 
     imgAnimIn.finished.then(function () {
@@ -22,7 +23,8 @@ function doAnimation(animationData) {
         translateX: -1310,
         autoplay: false,
         duration: animationData.rollInOutDuration,
-        endDelay: animationData.pauseDuration
+        endDelay: animationData.pauseDuration,
+        easing: animationData.animationEasing
     })
 
     textAnimIn.finished.then(function () {

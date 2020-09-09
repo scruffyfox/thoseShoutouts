@@ -17,6 +17,7 @@ Open up **config.js** and inside you can change the following variables:
 - rollInOutDuration - time taken for the image and text to roll in to the centre of the screen (in milliseconds)
 - userBackgroundColour - background color of the label
 - userTextColour - text color of the label
+- animationEasing - easing used by anime.js, full list [here](https://animejs.com/documentation/#linearEasing)
 
 ## Limitations
 Currently this code has the following shortcomings:

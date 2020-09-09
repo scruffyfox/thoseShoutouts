@@ -35,6 +35,7 @@ Shoutouts.prototype.playNext = function playNext() {
         textElementId:  `#${this._config.textElementId}`,
         pauseDuration: this._config.pauseDuration, 
         rollInOutDuration: this._config.rollInOutDuration,
+        animationEasing: this._config.animationEasing,
         onShoutoutStart: onShoutoutStart, 
         onShoutoutEnd: onShoutoutEnd
     })

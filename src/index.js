@@ -13,7 +13,8 @@ function init() {
         contentElementId: 'content', 
         textElementId: 'text',
         pauseDuration: pauseDuration, 
-        rollInOutDuration: rollInOutDuration
+        rollInOutDuration: rollInOutDuration,
+        animationEasing: animationEasing
     })
 
     client = new tmi.client(tmiConfig)
