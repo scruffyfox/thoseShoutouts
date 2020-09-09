@@ -19,6 +19,9 @@ const userBackgroundColour = '#43cefb'
 // Text color of the label
 const userTextColour = '#ffffff'
 
+// Easing - Full list here https://animejs.com/documentation/#linearEasing
+const animationEasing = 'easeOutElastic(1, .5)'
+
 // Do not touch this stuff x
 const config = { 'Client-ID': '9l8ufsalz4hqlzzl1g0mr7e38uxx1m',
                  'Authorization': `Bearer ${token}` }
