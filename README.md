@@ -6,7 +6,7 @@ To get started, download the the code and double-click 'starthere.htm' for full 
 ### [Download Here](https://github.com/thoseEyes/thoseShoutouts/archive/main.zip)
 
 ## Updates
-- IMPROVMENT ([PR#7](https://github.com/thoseEyes/thoseShoutouts/pull/7)): Animation easing type can now be changed in config.js
+- IMPROVEMENT ([PR#7](https://github.com/thoseEyes/thoseShoutouts/pull/7)): Animation easing type can now be changed in config.js
 - BUG FIX ([PR#4](https://github.com/thoseEyes/thoseShoutouts/pull/4)): Quick consecutive !so calls no longer stall (in wonky positions)
 - BUG FIX ([PR#4](https://github.com/thoseEyes/thoseShoutouts/pull/4)): Quick consecutive !so calls no longer cause profile images to be replaced mid-animation
 
