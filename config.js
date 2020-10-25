@@ -5,6 +5,10 @@ const channel = 'yourChannelNameHere'
 // Paste the token from the setup here 
 const token = 'yourTokenHere'
 
+// Team name for auto shoutouts i.e., CNT Club is 'cntclub'
+// taken from the team URL https://www.twitch.tv/team/cntclub
+const team = ''
+
 // Set how long the shoutout will stay on screen for here
 // Value is milliseconds so 1 second = 1000
 const pauseDuration = 500
