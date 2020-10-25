@@ -53,5 +53,5 @@ function sendChatMessage(shoutoutModel, config) {
     message = message.replace('{user}', shoutoutModel.username)
     message = message.replace('{link}', `https://twitch.tv/${shoutoutModel.username}`)
 
-    shoutoutModel.chatCallback(config.messageTemplate)
+    shoutoutModel.chatCallback(message)
 }
