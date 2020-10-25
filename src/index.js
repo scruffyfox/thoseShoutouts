@@ -7,13 +7,16 @@ let teamUsers = []
 function init() {
 
     const tmiConfig = {
-        "identity": {
-            "username": channel,
-            "password": chatPassword
-        },
         "channels": [
             channel
         ]
+    }
+
+    if (chatPassword !== undefined && chatPassword !== '') {
+        tmiConfig["identity"] = {
+            "username": channel,
+            "password": chatPassword
+        }
     }
 
     shoutouts = new Shoutouts({
