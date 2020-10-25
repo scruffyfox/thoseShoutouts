@@ -7,6 +7,10 @@ let teamUsers = []
 function init() {
 
     const tmiConfig = {
+        "identity": {
+            "username": channel,
+            "password": chatPassword
+        },
         "channels": [
             channel
         ]
@@ -17,7 +21,8 @@ function init() {
         textElementId: 'text',
         pauseDuration: pauseDuration, 
         rollInOutDuration: rollInOutDuration,
-        animationEasing: animationEasing
+        animationEasing: animationEasing,
+        messageTemplate: chatMessageTemplate
     })
 
     loadTeam(team)
@@ -63,11 +68,16 @@ function setColours() {
     text.style.color = userTextColour
 }
 
+function say(msg) {
+    client.say(channel, msg)
+}
+
 function shoutout(twitchUsername) {
     getProfileImageURL(twitchUsername, function (username, imageURL) {
         shoutouts.push({
             username: username, 
-            imageURL: imageURL
+            imageURL: imageURL,
+            chatCallback: say
         })
     })
 }

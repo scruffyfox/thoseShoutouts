@@ -1,13 +1,25 @@
 
-// Put your channel name here e.g., thoseEyes
-const channel = 'yourChannelNameHere'
+// REQUIRED
+// Put your channel name here e.g., 'thoseEyes'
+const channel = ''
 
-// Paste the token from the setup here 
-const token = 'yourTokenHere'
+// REQUIRED
+// Paste the token from the setup here e.g., 'rtyuwusdfghz1wa0lsdfgryvqasd'
+const token = ''
 
+// OPTIONAL
+// Paste Twitch Chat OAuth Password from here: https://twitchapps.com/tmi/
+// e.g., 'oath:somethingsomething'
+const chatPassword = ''
+
+// OPTIONAL
 // Team name for auto shoutouts i.e., CNT Club is 'cntclub'
 // taken from the team URL https://www.twitch.tv/team/cntclub
 const team = ''
+
+// Template for the shoutout message in chat use
+// Variables: {user} {link}
+const chatMessageTemplate = `/me Go follow {user}, we love them! {link}`
 
 // Set how long the shoutout will stay on screen for here
 // Value is milliseconds so 1 second = 1000

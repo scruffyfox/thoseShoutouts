@@ -19,6 +19,7 @@ Shoutouts.prototype.playNext = function playNext() {
     this._shoutoutQueue.shift()
 
     updateHTML(nextShoutout, this._config)
+    sendChatMessage(nextShoutout, this._config)
 
     const _this = this
     const onShoutoutStart = function() {
@@ -45,4 +46,12 @@ function updateHTML(shoutoutModel, config) {
     const img = `<img src="${shoutoutModel.imageURL}"/>`
     document.getElementById(config.contentElementId).innerHTML = img
     document.getElementById(config.textElementId).innerHTML = shoutoutModel.username
+}
+
+function sendChatMessage(shoutoutModel, config) {
+    let message = config.messageTemplate
+    message = message.replace('{user}', shoutoutModel.username)
+    message = message.replace('{link}', `https://twitch.tv/${shoutoutModel.username}`)
+
+    shoutoutModel.chatCallback(config.messageTemplate)
 }
