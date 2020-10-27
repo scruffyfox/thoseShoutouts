@@ -66,7 +66,7 @@ function onMessageHandler(target, context, msg, self) {
                 username = username.substring(1)
             }
 
-            shoutout(username)
+            shoutout(username, messageGenerator.custom(context['display-name']))
         }
     }
 
