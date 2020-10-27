@@ -12,6 +12,8 @@ To get started, download the the code and double-click 'starthere.htm' for full 
 
 ## Customisation
 
+Open up **autoShoutoutList.txt** and **teamList.txt** to add channels and teams respectively for your auto shoutouts. You will need to setup a **Chat Password** for this also. Full details in `starthere.htm`.
+
 Open up **config.js** and inside you can change the following variables:
 
 - pauseDuration - the length of time the shoutout will pause in the centre of the screen (in milliseconds)
