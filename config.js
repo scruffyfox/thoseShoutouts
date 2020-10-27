@@ -13,9 +13,9 @@ const token = ''
 const chatPassword = ''
 
 // OPTIONAL
-// Team name for auto shoutouts i.e., CNT Club is 'cntclub'
+// Team names for auto shoutouts i.e., CNT Club is ['cntclub']
 // taken from the team URL https://www.twitch.tv/team/cntclub
-const team = ''
+const teams = []
 
 // Template for the shoutout message in chat use
 // Variables: {user} {link}

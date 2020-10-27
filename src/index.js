@@ -1,10 +1,29 @@
 let client = false
 let shoutouts = false
+let teamAutoList = false
 
 let spokenUsers = {}
-let teamUsers = []
 
 function init() {
+
+    setColours()
+
+    shoutouts = new Shoutouts({
+        contentElementId: 'content', 
+        textElementId: 'text',
+        pauseDuration: pauseDuration, 
+        rollInOutDuration: rollInOutDuration,
+        animationEasing: animationEasing,
+        messageTemplate: chatMessageTemplate
+    })
+
+    teamAutoList = new TeamAutoList(teams)
+    teamAutoList.load(function() {
+        connectTMIClient()
+    })
+}
+
+function connectTMIClient() {
 
     const tmiConfig = {
         "channels": [
@@ -19,29 +38,17 @@ function init() {
         }
     }
 
-    shoutouts = new Shoutouts({
-        contentElementId: 'content', 
-        textElementId: 'text',
-        pauseDuration: pauseDuration, 
-        rollInOutDuration: rollInOutDuration,
-        animationEasing: animationEasing,
-        messageTemplate: chatMessageTemplate
-    })
-
-    loadTeam(team)
-
     client = new tmi.client(tmiConfig)
 
     client.on('message', onMessageHandler)
     client.on('connected', onConnectedHandler)
 
     client.connect()
-
-    setColours()
 }
 
 function onMessageHandler(target, context, msg, self) {
 
+    // Manual Shoutout
     if (context.mod || (context["badges-raw"] != null && context["badges-raw"].startsWith("broadcaster"))) {
 
         if (msg.startsWith('!so')) {
@@ -55,10 +62,12 @@ function onMessageHandler(target, context, msg, self) {
         }
     }
 
-    if (isOnTeam(context.username) && spokenUsers[context.username] === undefined) {
+    // Team Auto List Shoutout
+    if (teamAutoList.isOnList(context.username) && spokenUsers[context.username] === undefined) {
         shoutout(context['display-name'])
     }
 
+    // Track users who have spoken
     spokenUsers[context.username] = true
 }
 
@@ -85,26 +94,6 @@ function shoutout(twitchUsername) {
     })
 }
 
-function loadTeam(teamName) {
-
-    if (teamName === undefined || teamName === '') {
-        return
-    }
-
-    getTeamMembers(teamName, function(teamMembers) {
-        teamUsers = teamMembers
-    })
-}
-
-function isOnTeam(username) {
-    
-    const filtered = teamUsers.filter(function(user){
-        return user.name === username
-    })
-
-    return filtered.length > 0
-}
-
 // Network 
 
 function getProfileImageURL(username, callback) {
@@ -121,27 +110,5 @@ function getProfileImageURL(username, callback) {
     httpRequest.open('GET', `https://api.twitch.tv/helix/users?login=${username}`)
     httpRequest.setRequestHeader('Client-ID', config['Client-ID'])
     httpRequest.setRequestHeader('Authorization', config['Authorization'])
-    httpRequest.send()
-}
-
-function getTeamMembers(teamname, callback) {
-    function httpCallback() {
-        const data = JSON.parse(this.responseText)
-
-        const teamMembers = data.users.map(function (user) {
-            return { name: user.name, display_name: user.display_name, url: user.url, game: user.game }
-        })
-
-        callback(teamMembers)
-    }
-
-    // The endpoint used here is deprecated
-    // and will eventually be shutdown by Twitch
-    const httpRequest = new XMLHttpRequest()
-
-    httpRequest.addEventListener('load', httpCallback)
-    httpRequest.open('GET', `https://api.twitch.tv/kraken/teams/${teamname}`)
-    httpRequest.setRequestHeader('Client-ID', config['Client-ID'])
-    httpRequest.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json')
     httpRequest.send()
 }
