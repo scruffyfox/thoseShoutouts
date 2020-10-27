@@ -5,7 +5,7 @@ let messageGenerator = false
 let customAutoList = false
 let teamAutoList = false
 
-function init() {
+async function init() {
 
     setColours()
 
@@ -21,10 +21,14 @@ function init() {
 
     messageGenerator = new MessageGenerator(autoShoutoutChatMessage, teamShoutoutChatMessage)
 
+    const autoShoutouts = await utils.readFileToArray('autoShoutoutList.txt')
     customAutoList = new CustomAutoList(autoShoutouts)
 
+    const teams = await utils.readFileToArray('teamList.txt')
     teamAutoList = new TeamAutoList(teams)
-    teamAutoList.load(connectTMIClient)
+    await teamAutoList.load()
+
+    connectTMIClient()
 }
 
 function connectTMIClient() {

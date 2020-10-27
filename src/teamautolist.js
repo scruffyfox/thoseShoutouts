@@ -4,7 +4,7 @@ function TeamAutoList(teams) {
     this.channelList = [] // [{channel: '', team: ''}]
 }
 
-TeamAutoList.prototype.load = async function load(completionCallback) {
+TeamAutoList.prototype.load = async function load() {
     
     _this = this
     const promises = []
@@ -16,7 +16,7 @@ TeamAutoList.prototype.load = async function load(completionCallback) {
         promises.push(p)
     }
 
-    await Promise.all(promises).then(completionCallback)
+    return Promise.all(promises)
 }
 
 TeamAutoList.prototype.get = function get(channel) {
