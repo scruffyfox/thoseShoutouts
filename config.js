@@ -16,14 +16,18 @@ const chatPassword = ''
 const autoShoutouts = []
 
 // OPTIONAL
-// Team names for auto shoutouts i.e., CNT Club is ['cntclub']
+// Team names for auto shoutouts i.e., CNT Club is: ['cntclub']
 // Taken from the team URL https://www.twitch.tv/team/cntclub
 // Multiple teams are set like this: ['cntclub', 'weesquad']
 const teams = []
 
-// Template for the shoutout message in chat use
+// Template for the auto shoutout message sent to chat
 // Variables: {user} {link}
-const chatMessageTemplate = `/me Go follow {user}, we love them! {link}`
+const autoShoutoutChatMessage = '/me Go follow {user}, we love them! {link}'
+
+// Template for the team shoutout message sent to chat
+// Variables: {user} {link} {team} {teamlink}
+const teamShoutoutChatMessage = "/me Go follow {user}, we love them! {link} They're part of the {team}! {teamlink}"
 
 // Set how long the shoutout will stay on screen for here
 // Value is milliseconds so 1 second = 1000

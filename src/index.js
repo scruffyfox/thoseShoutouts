@@ -1,6 +1,7 @@
 let client = false
 let shoutouts = false
 let spokenUsers = false
+let messageGenerator = false
 let customAutoList = false
 let teamAutoList = false
 
@@ -13,11 +14,12 @@ function init() {
         textElementId: 'text',
         pauseDuration: pauseDuration, 
         rollInOutDuration: rollInOutDuration,
-        animationEasing: animationEasing,
-        messageTemplate: chatMessageTemplate
+        animationEasing: animationEasing
     })
 
     spokenUsers = new SpokenUsers()
+
+    messageGenerator = new MessageGenerator(autoShoutoutChatMessage, teamShoutoutChatMessage)
 
     customAutoList = new CustomAutoList(autoShoutouts)
 
@@ -28,15 +30,15 @@ function init() {
 function connectTMIClient() {
 
     const tmiConfig = {
-        "channels": [
+        'channels': [
             channel
         ]
     }
 
     if (chatPassword !== undefined && chatPassword !== '') {
-        tmiConfig["identity"] = {
-            "username": channel,
-            "password": chatPassword
+        tmiConfig['identity'] = {
+            'username': channel,
+            'password': chatPassword
         }
     }
 
@@ -51,7 +53,7 @@ function connectTMIClient() {
 function onMessageHandler(target, context, msg, self) {
 
     // Manual Shoutout
-    if (context.mod || (context["badges-raw"] != null && context["badges-raw"].startsWith("broadcaster"))) {
+    if (context.mod || (context['badges-raw'] != null && context['badges-raw'].startsWith('broadcaster'))) {
 
         if (msg.startsWith('!so')) {
             var username = msg.split(' ')[1]
@@ -67,13 +69,15 @@ function onMessageHandler(target, context, msg, self) {
     const spoken = spokenUsers.hasSpoken(context.username)
 
     // Team Auto List Shoutout
-    if (teamAutoList.isOnList(context.username) && spoken === false) {
-        shoutout(context['display-name'])
+    const teamChannel = teamAutoList.get(context.username)
+    if (teamAutoList.get(context.username) && spoken === false) {
+        shoutout(context['display-name'], messageGenerator.team(teamChannel))
     }
 
     // Custom Auto List Shoutout
-    if (customAutoList.isOnList(context.username) && spoken === false) {
-        shoutout(context['display-name'])
+    const customChannel = customAutoList.get(context.username)
+    if (customChannel !== undefined && spoken === false) {
+        shoutout(context['display-name'], messageGenerator.custom(context['display-name']))
     }
 
     // Track users who have spoken
@@ -93,11 +97,12 @@ function say(msg) {
     client.say(channel, msg)
 }
 
-function shoutout(twitchUsername) {
+function shoutout(twitchUsername, message) {
     getProfileImageURL(twitchUsername, function (username, imageURL) {
         shoutouts.push({
             username: username, 
             imageURL: imageURL,
+            message: message,
             chatCallback: say
         })
     })

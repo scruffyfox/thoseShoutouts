@@ -48,10 +48,6 @@ function updateHTML(shoutoutModel, config) {
     document.getElementById(config.textElementId).innerHTML = shoutoutModel.username
 }
 
-function sendChatMessage(shoutoutModel, config) {
-    let message = config.messageTemplate
-    message = message.replace('{user}', shoutoutModel.username)
-    message = message.replace('{link}', `https://twitch.tv/${shoutoutModel.username}`)
-
-    shoutoutModel.chatCallback(message)
+function sendChatMessage(shoutoutModel) {
+    shoutoutModel.chatCallback(shoutoutModel.message)
 }

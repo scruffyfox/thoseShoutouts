@@ -19,12 +19,12 @@ TeamAutoList.prototype.load = async function load(completionCallback) {
     await Promise.all(promises).then(completionCallback)
 }
 
-TeamAutoList.prototype.isOnList = function isOnList(channel) {
+TeamAutoList.prototype.get = function get(channel) {
     const filtered = this.channelList.filter(function(c) {
         return c.channel === channel
     })
 
-    return filtered.length > 0
+    return filtered[0]
 }
 
 function getTeamChannels(teamname) {
@@ -33,7 +33,12 @@ function getTeamChannels(teamname) {
             const data = JSON.parse(this.responseText)
     
             const teamChannels = data.users.map(function (user) {
-                return {channel: user.name, team: teamname}
+                return {
+                    channel: user.name, 
+                    channel_display_name: user.display_name, 
+                    team: teamname, 
+                    team_display_name: data.display_name
+                }
             })
     
             resolve(teamChannels)

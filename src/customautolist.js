@@ -3,10 +3,10 @@ function CustomAutoList(channels) {
     this.channels = channels
 }
 
-CustomAutoList.prototype.isOnList = function isOnList(channel) {
+CustomAutoList.prototype.get = function get(channel) {
     const filtered = this.channels.filter(function(c) {
         return c.toLowerCase() === channel.toLowerCase()
     })
 
-    return filtered.length > 0
+    return filtered[0]
 }
