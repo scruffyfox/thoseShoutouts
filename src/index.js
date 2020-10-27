@@ -19,13 +19,12 @@ function init() {
     spokenUsers = new SpokenUsers()
 
     teamAutoList = new TeamAutoList(teams)
-    teamAutoList.load(function() {
-        connectTMIClient()
-    })
+    teamAutoList.load(connectTMIClient)
 }
 
 function connectTMIClient() {
 
+    console.log('5')
     const tmiConfig = {
         "channels": [
             channel
