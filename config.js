@@ -1,10 +1,10 @@
 // REQUIRED
 // Put your channel name here e.g., 'thoseEyes'
-const channel = ''
+const channel = 'yourChannelNameHere'
 
 // REQUIRED
 // Paste the token from the setup here e.g., 'rtyuwusdfghz1wa0lsdfgryvqasd'
-const token = ''
+const token = 'yourTokenHere'
 
 // OPTIONAL
 // Paste Twitch Chat OAuth Password from here: https://twitchapps.com/tmi/
