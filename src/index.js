@@ -1,6 +1,7 @@
 let client = false
 let shoutouts = false
 let spokenUsers = false
+let customAutoList = false
 let teamAutoList = false
 
 function init() {
@@ -17,6 +18,8 @@ function init() {
     })
 
     spokenUsers = new SpokenUsers()
+
+    customAutoList = new CustomAutoList(autoShoutouts)
 
     teamAutoList = new TeamAutoList(teams)
     teamAutoList.load(connectTMIClient)
@@ -65,6 +68,11 @@ function onMessageHandler(target, context, msg, self) {
 
     // Team Auto List Shoutout
     if (teamAutoList.isOnList(context.username) && spoken === false) {
+        shoutout(context['display-name'])
+    }
+
+    // Custom Auto List Shoutout
+    if (customAutoList.isOnList(context.username) && spoken === false) {
         shoutout(context['display-name'])
     }
 

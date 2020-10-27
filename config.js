@@ -1,4 +1,3 @@
-
 // REQUIRED
 // Put your channel name here e.g., 'thoseEyes'
 const channel = ''
@@ -13,8 +12,13 @@ const token = ''
 const chatPassword = ''
 
 // OPTIONAL
+// Channel names for auto shoutouts i.e., ['AyupRyan', 'yuecake']
+const autoShoutouts = []
+
+// OPTIONAL
 // Team names for auto shoutouts i.e., CNT Club is ['cntclub']
-// taken from the team URL https://www.twitch.tv/team/cntclub
+// Taken from the team URL https://www.twitch.tv/team/cntclub
+// Multiple teams are set like this: ['cntclub', 'weesquad']
 const teams = []
 
 // Template for the shoutout message in chat use
