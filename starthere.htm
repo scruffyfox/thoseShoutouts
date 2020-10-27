@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hammersmith+One">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: "Hammersmith One";
+            font-family: 'Roboto', sans-serif;
         }
 
         #result {
@@ -29,61 +29,108 @@
     <p><b>You will need to regenerate this every 60 days (for now)</b></p>
     <p>To use Animated Shoutouts, please add 'shoutouts.htm' as a local browser sourse in OBS.</p>
 
-    <a href="#tokens">Token Generation</a> |
-    <a href="#obs">OBS Setup</a> |
-    <a href="#customisation">Customisation</a>
+    <ul>
+        <li><a href="#tokens">1. Basic Setup</a></li>
+        <li><a href="#autoShoutouts">2. (NEW) Auto Shoutouts and Team Shoutouts</a></li>
+        <li><a href="#obs">3. OBS Setup</a></li>
+        <li><a href="#customisation">4. Customisation</a></li>
+    </ul>
 
     <a id="tokens">
-        <h2>Token Generation</h2>
+        <h2>1. Basic Setup</h2>
     </a>
 
-    <p>1. Click <a
+    <p>1.1 Click <a
             href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=9l8ufsalz4hqlzzl1g0mr7e38uxx1m&redirect_uri=http://localhost&scope=user_read"
             target="_blank">here</a> and login to Twitch</p>
 
-    <p>2. Once logged in, you'll be directed to an error page, BUT FEAR NOT. Copy the value highlighted in the address
+    <p>1.2 Once logged in, you'll be directed to an error page, BUT FEAR NOT. Copy the value highlighted in the address
         bar (between the = and the &amp;), as pictured below:</p>
 
     <img src="images/addressbar.png" />
 
-    <p>3. Open 'config.js' in Notepad and paste in the value as highlighted in the image below:</p>
+    <p>1.3 Open 'config.js' in Notepad and paste in the value as highlighted in the image below:</p>
 
     <img src="images/token.png" />
 
-    <p>4. Put your channel name (mine would be 'thoseEyes') in place of the text as highlighted below:</p>
+    <p>1.4 Put your channel name (mine would be 'thoseEyes') in place of the text as highlighted below:</p>
 
     <img src="images/channelName.png" />
 
-    <p>5. Save the file.</p>
+    <p>1.5 Save the file.</p>
 
-    <a id="obs">
-        <h2>OBS Setup</h2>
+    <a id="autoShoutouts">
+        <h2>2. (NEW) Auto Shoutouts and Team Shoutouts</h2>
     </a>
 
-    <p>1. In OBS, create a new Browser Source.</p>
+    <p>The system can now automatically shoutout chosen channels and members of teams as they enter chat! The shoutout
+        animation is triggered alongside a message in chat. This can be setup for a custom list of users/channels,
+        alongside any number of stream teams.</p>
 
-    <p>2. Tick 'Local file' and 'Width' to 1920 and 'Height' to 350.</p>
+    <p>This requires an additional chat password to be generated so messages can be sent to your chat.</p>
 
-    <img src="images/obs.jpg" />
+    <p><b>NOTE: You should disable the !so command in StreamLabs and StreamElements when using this feature.</b></p>
 
-    <p>3. Click OK and you're done in OBS</p>
+    <p>2.1 Click <a href="https://twitchapps.com/tmi/" target="_blank">here</a> and then click Connect.</p>
+
+    <p>2.2 After logging in, please copy the generated password as shown below:</p>
+
+    <img src="images/chatPassword.png" />
+
+    <p>2.3 Open 'config.js' in Notepad and paste in the value as highlighted in the image below:</p>
+
+    <img src="images/chatPasswordConfig.png" />
+
+    <p>2.4 Save the file.</p>
+
+    <p>2.5 Open 'autoShoutoutList.txt'. Add each channel that you want to shoutout on a new line like so, then save the file.</p>
+
+    <img src="images/autoConfig.png" />
+
+    <p>2.6 Open 'teamList.txt'. Add each team that you want to shoutout on a new line like so, then save the file. The system will fetch all members of each team for you!</p>
+
+    <img src="images/teamConfig.png" />
+
+    <p>2.7 Chat messages are customisable. There are different formats for channel shoutouts and team shoutouts as shown below. Each have variables (e.g., {user}) that can be used, these are detailed in file.</p>
+
+    <img src="images/customiseMessage.png" />
+
+    <a id="obs">
+        <h2>3. OBS Setup</h2>
+    </a>
+
+    <p>3.1 In OBS, create a new Browser Source.</p>
+
+    <p>3.2 Tick 'Local file' and 'Width' to 1920 and 'Height' to 350. Leave the two checkboxes unchecked.</p>
+
+    <img src="images/obs.png" />
+
+    <p>3.3 Click OK and you're done in OBS.</p>
 
     <a id="customisation">
-        <h2>Customisation</h2>
+        <h2>4. Customisation</h2>
     </a>
 
     <p>Open up <b>config.js</b> and inside you can change the following variables:</p>
 
     <ul>
-        <li>pauseDuration - the length of time the shoutout will pause in the centre of the screen (in milliseconds)
+        <li>
+            <b>autoShoutoutChatMessage</b> - template for the auto shoutout message sent to chat, variables: {user} {link}
         </li>
-        <li>rollInOutDuration - time taken for the image and text to roll in to the centre of the screen (in
+        <li>
+            <b>teamShoutoutChatMessage</b> - template for the team shoutout message sent to chat, variables: {user} {link}
+            {team} {teamlink}
+        </li>
+        <li><b>pauseDuration</b> - the length of time the shoutout will pause in the centre of the screen (in milliseconds)
+        </li>
+        <li><b>rollInOutDuration</b> - time taken for the image and text to roll in to the centre of the screen (in
             milliseconds)</li>
-        <li>userBackgroundColour - background color of the label</li>
+        <li><b>userBackgroundColour</b> - background color of the label</li>
         <li>
-            userTextColour - text color of the label</li>
+            <b>userTextColour</b> - text color of the label</li>
         <li>
-            animationEasing - easing used by anime.js, full list <a href="https://animejs.com/documentation/#linearEasing">here</a></li>
+            <b>animationEasing</b> - easing used by anime.js, full list <a
+                href="https://animejs.com/documentation/#linearEasing">here</a></li>
     </ul>
 </body>
 
