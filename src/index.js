@@ -24,7 +24,6 @@ function init() {
 
 function connectTMIClient() {
 
-    console.log('5')
     const tmiConfig = {
         "channels": [
             channel
