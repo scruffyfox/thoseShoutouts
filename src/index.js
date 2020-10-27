@@ -1,8 +1,7 @@
 let client = false
 let shoutouts = false
+let spokenUsers = false
 let teamAutoList = false
-
-let spokenUsers = {}
 
 function init() {
 
@@ -16,6 +15,8 @@ function init() {
         animationEasing: animationEasing,
         messageTemplate: chatMessageTemplate
     })
+
+    spokenUsers = new SpokenUsers()
 
     teamAutoList = new TeamAutoList(teams)
     teamAutoList.load(function() {
@@ -62,13 +63,15 @@ function onMessageHandler(target, context, msg, self) {
         }
     }
 
+    const spoken = spokenUsers.hasSpoken(context.username)
+
     // Team Auto List Shoutout
-    if (teamAutoList.isOnList(context.username) && spokenUsers[context.username] === undefined) {
+    if (teamAutoList.isOnList(context.username) && spoken === false) {
         shoutout(context['display-name'])
     }
 
     // Track users who have spoken
-    spokenUsers[context.username] = true
+    spokenUsers.add(context.username)
 }
 
 function onConnectedHandler(addr, port) {

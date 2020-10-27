@@ -20,7 +20,7 @@ TeamAutoList.prototype.load = function load(completionCallback) {
 
 TeamAutoList.prototype.isOnList = function isOnList(channel) {
     const filtered = this.channelList.filter(function(c){
-        return c.channel.toLowerCase() === channel.toLowerCase()
+        return c.channel === channel
     })
 
     return filtered.length > 0
@@ -31,7 +31,7 @@ function getTeamChannels(teamname, callback) {
         const data = JSON.parse(this.responseText)
 
         const teamChannels = data.users.map(function (user) {
-            return {channel: user.display_name, team: teamname}
+            return {channel: user.name, team: teamname}
         })
 
         callback(teamChannels)
