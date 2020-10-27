@@ -1,13 +1,13 @@
 let client = false
 let shoutouts = false
+let spokenUsers = false
+let messageGenerator = false
+let customAutoList = false
+let teamAutoList = false
 
-function init() {
+async function init() {
 
-    const tmiConfig = {
-        "channels": [
-            channel
-        ]
-    }
+    setColours()
 
     shoutouts = new Shoutouts({
         contentElementId: 'content', 
@@ -17,19 +17,47 @@ function init() {
         animationEasing: animationEasing
     })
 
+    spokenUsers = new SpokenUsers()
+
+    messageGenerator = new MessageGenerator(autoShoutoutChatMessage, teamShoutoutChatMessage)
+
+    const autoShoutouts = await utils.readFileToArray('autoShoutoutList.txt')
+    customAutoList = new CustomAutoList(autoShoutouts)
+
+    const teams = await utils.readFileToArray('teamList.txt')
+    teamAutoList = new TeamAutoList(teams)
+    await teamAutoList.load()
+
+    connectTMIClient()
+}
+
+function connectTMIClient() {
+
+    const tmiConfig = {
+        'channels': [
+            channel
+        ]
+    }
+
+    if (chatPassword !== undefined && chatPassword !== '') {
+        tmiConfig['identity'] = {
+            'username': channel,
+            'password': chatPassword
+        }
+    }
+
     client = new tmi.client(tmiConfig)
 
     client.on('message', onMessageHandler)
     client.on('connected', onConnectedHandler)
 
     client.connect()
-
-    setColours()
 }
 
 function onMessageHandler(target, context, msg, self) {
 
-    if (context.mod || (context["badges-raw"] != null && context["badges-raw"].startsWith("broadcaster"))) {
+    // Manual Shoutout
+    if (context.mod || (context['badges-raw'] != null && context['badges-raw'].startsWith('broadcaster'))) {
 
         if (msg.startsWith('!so')) {
             var username = msg.split(' ')[1]
@@ -38,9 +66,26 @@ function onMessageHandler(target, context, msg, self) {
                 username = username.substring(1)
             }
 
-            shoutout(username)
+            shoutout(username, messageGenerator.custom(context['display-name']))
         }
     }
+
+    const spoken = spokenUsers.hasSpoken(context.username)
+
+    // Team Auto List Shoutout
+    const teamChannel = teamAutoList.get(context.username)
+    if (teamAutoList.get(context.username) && spoken === false) {
+        shoutout(context['display-name'], messageGenerator.team(teamChannel))
+    }
+
+    // Custom Auto List Shoutout
+    const customChannel = customAutoList.get(context.username)
+    if (customChannel !== undefined && spoken === false) {
+        shoutout(context['display-name'], messageGenerator.custom(context['display-name']))
+    }
+
+    // Track users who have spoken
+    spokenUsers.add(context.username)
 }
 
 function onConnectedHandler(addr, port) {
@@ -52,14 +97,22 @@ function setColours() {
     text.style.color = userTextColour
 }
 
-function shoutout(twitchUsername) {
+function say(msg) {
+    client.say(channel, msg)
+}
+
+function shoutout(twitchUsername, message) {
     getProfileImageURL(twitchUsername, function (username, imageURL) {
         shoutouts.push({
             username: username, 
-            imageURL: imageURL
+            imageURL: imageURL,
+            message: message,
+            chatCallback: say
         })
     })
 }
+
+// Network 
 
 function getProfileImageURL(username, callback) {
     function httpCallback() {
