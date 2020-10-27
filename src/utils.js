@@ -1,14 +1,15 @@
 const utils = {
     readFile: async (file) => {
-        var response = ""
+        var response = ''
         await $.ajax({
             url: file,
             type: 'GET',
             dataType: 'text',
             success: function (data) {
-                response = data;
+                response = data
             }
-        });
+        })
+        
         return response
     },
     readFileToArray: async (file) => {

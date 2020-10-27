@@ -19,7 +19,7 @@ Shoutouts.prototype.playNext = function playNext() {
     this._shoutoutQueue.shift()
 
     updateHTML(nextShoutout, this._config)
-    sendChatMessage(nextShoutout, this._config)
+    sendChatMessage(nextShoutout)
 
     const _this = this
     const onShoutoutStart = function() {
