@@ -3,9 +3,9 @@ function SpokenUsers() {
 }
 
 SpokenUsers.prototype.add = function add(user) {
-    this.spoken[user] = true
+    this.spoken[user.toLowerCase()] = true
 }
 
 SpokenUsers.prototype.hasSpoken = function hasSpoken(user) {
-    return this.spoken[user] === true
+    return this.spoken[user.toLowerCase()] === true
 }
