@@ -18,6 +18,7 @@ async function init() {
     })
 
     spokenUsers = new SpokenUsers()
+    spokenUsers.add(channel)
 
     messageGenerator = new MessageGenerator(autoShoutoutChatMessage, teamShoutoutChatMessage)
 
