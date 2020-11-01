@@ -1,7 +1,7 @@
-// takes array of team strings
-function TeamAutoList(teams) {
+function TeamAutoList(teams, optOutList) {
     this.teams = teams
-    this.channelList = [] // [{channel: '', team: ''}]
+    this.channelList = []
+    this.optOutList = optOutList
 }
 
 TeamAutoList.prototype.load = async function load() {
@@ -20,11 +20,24 @@ TeamAutoList.prototype.load = async function load() {
 }
 
 TeamAutoList.prototype.get = function get(channel) {
+
+    if (this.optedOut(channel)) {
+        return undefined
+    }
+
     const filtered = this.channelList.filter(function(c) {
-        return c.channel === channel
+        return c.channel.toLowerCase() === channel.toLowerCase()
     })
 
     return filtered[0]
+}
+
+TeamAutoList.prototype.optedOut = function optedOut(channel) {
+    const filtered = this.optOutList.filter(function(c) {
+        return c.toLowerCase() === channel.toLowerCase()
+    })
+
+    return filtered.length > 0
 }
 
 function getTeamChannels(teamname) {

@@ -18,7 +18,6 @@ async function init() {
     })
 
     spokenUsers = new SpokenUsers()
-    spokenUsers.add(channel)
 
     messageGenerator = new MessageGenerator(autoShoutoutChatMessage, teamShoutoutChatMessage)
 
@@ -26,7 +25,11 @@ async function init() {
     customAutoList = new CustomAutoList(autoShoutouts)
 
     const teams = await utils.readFileToArray('teamList.txt')
-    teamAutoList = new TeamAutoList(teams)
+
+    const optOutList = await utils.readFileToArray('teamOptOutList.txt')
+    optOutList.push(channel) // opt out broadcaster from teams
+
+    teamAutoList = new TeamAutoList(teams, optOutList)
     await teamAutoList.load()
 
     connectTMIClient()
@@ -73,20 +76,22 @@ function onMessageHandler(target, context, msg, self) {
 
     const spoken = spokenUsers.hasSpoken(context.username)
 
-    // Team Auto List Shoutout
-    const teamChannel = teamAutoList.get(context.username)
-    if (teamAutoList.get(context.username) && spoken === false) {
-        shoutout(context['display-name'], messageGenerator.team(teamChannel))
-    }
-
-    // Custom Auto List Shoutout
-    const customChannel = customAutoList.get(context.username)
-    if (customChannel !== undefined && spoken === false) {
-        shoutout(context['display-name'], messageGenerator.custom(context['display-name']))
+    if (spoken === true) {
+        return
     }
 
     // Track users who have spoken
     spokenUsers.add(context.username)
+
+    const teamChannel = teamAutoList.get(context.username)
+    const customChannel = customAutoList.get(context.username)
+    
+    // Team Auto List Shoutout
+    if (teamChannel !== undefined) {
+        shoutout(context['display-name'], messageGenerator.team(teamChannel))
+    } else if (customChannel !== undefined) {
+        shoutout(context['display-name'], messageGenerator.custom(context['display-name']))
+    }
 }
 
 function onConnectedHandler(addr, port) {

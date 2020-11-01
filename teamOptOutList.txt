@@ -1,0 +1,1 @@
+# Add channels here that wish to opt-out of team auto shoutouts
