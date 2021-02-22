@@ -61,7 +61,7 @@ function connectTMIClient() {
             username = username.substring(1)
         }
 		
-		// prevent double shoutout for auto/team
+        // prevent double shoutout for auto/team
         spokenUsers.add(username)
 		
         shoutout(username, messageGenerator.raid(username, viewers))
