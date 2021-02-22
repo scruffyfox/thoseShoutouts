@@ -60,6 +60,10 @@ function connectTMIClient() {
         if (username.startsWith('@')) {
             username = username.substring(1)
         }
+		
+		// prevent double shoutout for auto/team
+        spokenUsers.add(username)
+		
         shoutout(username, messageGenerator.raid(username, viewers))
     });
 
