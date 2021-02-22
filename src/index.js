@@ -19,7 +19,7 @@ async function init() {
 
     spokenUsers = new SpokenUsers()
 
-    messageGenerator = new MessageGenerator(autoShoutoutChatMessage, teamShoutoutChatMessage)
+    messageGenerator = new MessageGenerator(autoShoutoutChatMessage, teamShoutoutChatMessage, raidShoutoutChatMessage)
 
     const autoShoutouts = await utils.readFileToArray('autoShoutoutList.txt')
     customAutoList = new CustomAutoList(autoShoutouts)
@@ -54,6 +54,12 @@ function connectTMIClient() {
 
     client.on('message', onMessageHandler)
     client.on('connected', onConnectedHandler)
+	client.on("raided", (channel, username, viewers) => {
+		if (username.startsWith('@')) {
+			username = username.substring(1)
+		}
+		shoutout(username, messageGenerator.raid(username, viewers))
+	});
 
     client.connect()
 }

@@ -19,6 +19,13 @@ const autoShoutoutChatMessage = '/me Go follow {user}, we love them! {link}'
 // Variables: {user} {link} {team} {teamlink}
 const teamShoutoutChatMessage = "/me Go follow {user}, we love them! {link} They're part of the {team}! {teamlink}"
 
+// Template for the raid shoutout message sent to chat
+// Variables: {user} {link} {count}
+const raidShoutoutChatMessage = "/me Thank you {user} for the raid! Go give them a follow over at {link}"
+
+// Minimum viewers in the raid to trigger the shout out
+const minimumRaidCount = 1
+
 // Set how long the shoutout will stay on screen for here
 // Value is milliseconds so 1 second = 1000
 const pauseDuration = 500
