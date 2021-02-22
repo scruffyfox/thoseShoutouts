@@ -54,14 +54,14 @@ function connectTMIClient() {
 
     client.on('message', onMessageHandler)
     client.on('connected', onConnectedHandler)
-	client.on("raided", (channel, username, viewers) => {
-		if (viewers < minimumRaidCount) return
+    client.on("raided", (channel, username, viewers) => {
+        if (viewers < minimumRaidCount) return
 		
-		if (username.startsWith('@')) {
-			username = username.substring(1)
-		}
-		shoutout(username, messageGenerator.raid(username, viewers))
-	});
+        if (username.startsWith('@')) {
+            username = username.substring(1)
+        }
+        shoutout(username, messageGenerator.raid(username, viewers))
+    });
 
     client.connect()
 }
